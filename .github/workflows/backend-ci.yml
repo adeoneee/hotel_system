@@ -4,12 +4,12 @@ on:
   push:
     branches: [main, develop]
     paths:
-      - 'backend/**'
+      - 'hotel_backend/**'                              # ← было 'backend/**'
       - '.github/workflows/backend-ci.yml'
   pull_request:
     branches: [main, develop]
     paths:
-      - 'backend/**'
+      - 'hotel_backend/**'
       - '.github/workflows/backend-ci.yml'
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: backend
+        working-directory: hotel_backend               # ← было backend
 
     steps:
       - uses: actions/checkout@v4
@@ -48,11 +48,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: checkstyle-report
-          path: backend/build/reports/checkstyle/
-
-      - name: Upload SpotBugs report
+          path: hotel_backend/build/reports/checkstyle/    
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: spotbugs-report
-          path: backend/build/reports/spotbugs/
+          path: hotel_backend/build/reports/spotbugs/    
