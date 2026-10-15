@@ -1,12 +1,13 @@
 # --- Backend (Java / Maven) ---
 target/
-!.mvn/wrapper/maven-wrapper.jar
 *.class
 *.jar
 *.war
 *.ear
 *.log
-
+hotel_backend/.gradle/
+hotel_backend/build/
+!hotel_backend/gradle/wrapper/gradle-wrapper.jar
 # --- Frontend (Node.js / Vite) ---
 node_modules/
 dist/
