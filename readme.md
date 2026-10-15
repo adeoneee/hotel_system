@@ -43,3 +43,38 @@
 ### Релизы
 
 Релизы создаются через теги `v<semver>` (SemVer) и GitHub Releases.
+
+# Стратегия слияния
+
+## Выбранный подход: Squash and Merge
+
+### Почему Squash
+
+1. **Линейная история** — `git log` читается как список фич, а не как «ёлочка».
+2. **Один PR = один коммит** — легко откатить через `git revert`.
+3. **Соответствие Conventional Commits** — заголовок PR становится единственным коммитом.
+4. **Простота для одного разработчика** — нет смысла хранить промежуточные коммиты ветки.
+
+### Запрещённые стратегии
+
+- **Merge Commit** — засоряет историю merge-коммитами.
+- **Rebase and Merge** — меняет хеши коммитов, усложняет откат.
+
+### Настройки репозитория
+
+В Settings → General → Pull Requests:
+- Allow merge commits: **OFF**
+- Allow squash merging: **ON**
+- Allow rebase merging: **OFF**
+- Automatically delete head branches: **ON**
+
+### Формат squash-коммита
+<type>(<scope>): <описание> (#PR)
+
+### Защита
+
+Ветки `main` и `develop` защищены:
+- запрет прямого push;
+- обязательный PR;
+- обязательное прохождение CI (commitlint);
+- запрет force push и удаления.
