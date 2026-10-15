@@ -1,0 +1,27 @@
+{
+  "name": "hotel_system",
+  "version": "1.0.0",
+  "description": "Веб-приложение для управления гостиницей.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky",
+    "test": "echo \"No tests in root yet\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adeoneee/hotel_system.git"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "husky": "^9.1.6"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adeoneee/hotel_system/issues"
+  },
+  "homepage": "https://github.com/adeoneee/hotel_system#readme"
+}
