@@ -100,4 +100,4 @@ tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach {
         html.required = true
     }
 }
-}
+
