@@ -1,0 +1,11 @@
+      - name: Grant execute permission for gradlew
+        run: chmod +x hotel_backend/gradlew
+
+      - name: Build backend JAR
+        working-directory: hotel_backend
+        run: ./gradlew bootJar -x test
+
+      - name: Rename JAR
+        run: |
+          mkdir -p artifacts
+          cp hotel_backend/build/libs/*.jar artifacts/hotel-backend-${{ github.ref_name }}.jar
