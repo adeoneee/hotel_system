@@ -4,7 +4,7 @@ on:
   push:
     branches: [main, develop]
     paths:
-      - 'hotel_backend/**'                              # ← было 'backend/**'
+      - 'hotel_backend/**'                     # ← было 'backend/**'
       - '.github/workflows/backend-ci.yml'
   pull_request:
     branches: [main, develop]

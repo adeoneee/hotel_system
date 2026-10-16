@@ -7,8 +7,8 @@
   "scripts": {
     "prepare": "husky",
     "test": "echo \"No tests in root yet\" && exit 0",
-    "lint:backend": "cd backend && gradlew.bat checkstyleMain checkstyleTest spotbugsMain",
-    "lint:frontend": "cd frontend && npm run lint && npm run format:check",
+    "lint:backend": "cd hotel_backend && gradlew.bat checkstyleMain checkstyleTest spotbugsMain",
+    "lint:frontend": "cd hotel-frontend && npm run lint && npm run format:check",
     "lint": "npm run lint:backend && npm run lint:frontend"
   },
   "repository": {
@@ -22,15 +22,15 @@
     "lint-staged": "^16.4.0"
   },
   "lint-staged": {
-    "frontend/**/*.{ts,tsx}": [
-      "cd frontend && npx eslint --fix",
-      "cd frontend && npx prettier --write"
+    "hotel-frontend/**/*.{ts,tsx}": [
+      "cd hotel-frontend && npx eslint --fix",
+      "cd hotel-frontend && npx prettier --write"
     ],
-    "frontend/**/*.{css,json,md}": [
-      "cd frontend && npx prettier --write"
+    "hotel-frontend/**/*.{css,json,md}": [
+      "cd hotel-frontend && npx prettier --write"
     ],
-    "backend/**/*.java": [
-      "cd backend && gradlew.bat checkstyleMain -q"
+    "hotel_backend/**/*.java": [
+      "cd hotel_backend && gradlew.bat checkstyleMain -q"
     ]
   },
   "keywords": [],
