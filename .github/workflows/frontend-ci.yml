@@ -11,9 +11,10 @@ on:
     paths:
       - 'hotel-frontend/**'
       - '.github/workflows/frontend-ci.yml'
+  workflow_dispatch:
 
 jobs:
-  lint-and-build:
+  lint-and-test:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -41,5 +42,22 @@ jobs:
       - name: TypeScript check
         run: npx tsc --noEmit
 
+      - name: Run tests with coverage
+        run: npm run test:coverage
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage
+          path: hotel-frontend/coverage/
+
       - name: Build
         run: npm run build
+
+      - name: Upload build artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: hotel-frontend/dist/
