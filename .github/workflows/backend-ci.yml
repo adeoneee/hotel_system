@@ -4,7 +4,7 @@ on:
   push:
     branches: [main, develop]
     paths:
-      - 'hotel_backend/**'
+      - 'hotel_backend/**'                     # ← было 'backend/**'
       - '.github/workflows/backend-ci.yml'
   pull_request:
     branches: [main, develop]
@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: hotel_backend
+        working-directory: hotel_backend               # ← было backend
 
     steps:
       - uses: actions/checkout@v4
@@ -42,3 +42,15 @@ jobs:
 
       - name: Run tests
         run: ./gradlew test
+
+      - name: Upload Checkstyle report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: checkstyle-report
+          path: hotel_backend/build/reports/checkstyle/    
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: spotbugs-report
+          path: hotel_backend/build/reports/spotbugs/    
