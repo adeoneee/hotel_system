@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - include:
+      file: changes/001-create-rooms.yaml
+      relativeToChangelogFile: true
+
+  - include:
+      file: changes/002-create-app-users.yaml
+      relativeToChangelogFile: true
+
+  - include:
+      file: changes/003-create-bookings.yaml
+      relativeToChangelogFile: true

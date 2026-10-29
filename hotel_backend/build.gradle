@@ -1,3 +1,4 @@
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '4.1.1'
@@ -25,8 +26,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    implementation 'org.springframework.boot:spring-boot-starter-liquibase'
     runtimeOnly 'org.postgresql:postgresql'
-
+    implementation 'org.springframework.boot:spring-boot-starter-security-oauth2-resource-server'
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-security-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-validation-test'
@@ -44,6 +46,7 @@ jacoco {
 
 jacocoTestReport {
     dependsOn test
+
     reports {
         xml.required = true
         html.required = true
@@ -54,6 +57,7 @@ jacocoTestCoverageVerification {
     violationRules {
         rule {
             element = 'BUNDLE'
+
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'

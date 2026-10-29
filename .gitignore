@@ -8,6 +8,7 @@ target/
 hotel_backend/.gradle/
 hotel_backend/build/
 !hotel_backend/gradle/wrapper/gradle-wrapper.jar
+.env
 # --- Frontend (Node.js / Vite) ---
 node_modules/
 dist/

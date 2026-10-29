@@ -1,3 +1,37 @@
 spring:
+  config:
+    import: optional:file:../.env[.properties]
+
   application:
     name: hotel_backend
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/hotel_system}
+    username: ${DB_USERNAME:hotel_user}
+    password: ${DB_PASSWORD:hotel_dev_password}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+
+server:
+  port: 8080
+
+app:
+  jwt:
+    secret-base64: ${JWT_SECRET_BASE64}
+    issuer: hotel-system
+    expiration-minutes: 30
+
+  bootstrap-admin:
+    email: ${APP_BOOTSTRAP_ADMIN_EMAIL:}
+    password: ${APP_BOOTSTRAP_ADMIN_PASSWORD:}
