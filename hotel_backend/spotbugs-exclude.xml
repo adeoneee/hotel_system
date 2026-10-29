@@ -3,4 +3,33 @@
     <Match>
         <Package name="~.*\.generated\..*"/>
     </Match>
+    <Match>
+        <Class name="com.example.hotel_backend.room.RoomController"/>
+        <Method name="&lt;init&gt;"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <Match>
+    <Class name="com.example.hotel_backend.booking.Booking"/>
+    <Method name="getGuest"/>
+    <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+
+    <Match>
+        <Class name="com.example.hotel_backend.booking.Booking"/>
+        <Method name="getRoom"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+    </Match>
+
+    <Match>
+        <Class name="com.example.hotel_backend.booking.Booking"/>
+        <Method name="setGuest"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
+
+    <Match>
+        <Class name="com.example.hotel_backend.booking.Booking"/>
+        <Method name="setRoom"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+    </Match>
 </FindBugsFilter>

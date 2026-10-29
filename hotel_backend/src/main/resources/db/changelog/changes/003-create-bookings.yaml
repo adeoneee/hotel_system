@@ -1,0 +1,98 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-create-bookings
+      author: hotel-system
+      changes:
+        - createTable:
+            tableName: bookings
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_bookings
+                    nullable: false
+              - column:
+                  name: room_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: guest_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: check_in
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: check_out
+                  type: DATE
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price_per_night
+                  type: DECIMAL(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: total_price
+                  type: DECIMAL(12,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  defaultValue: CONFIRMED
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: bookings
+            baseColumnNames: room_id
+            referencedTableName: rooms
+            referencedColumnNames: id
+            constraintName: fk_bookings_room
+            onDelete: RESTRICT
+
+        - addForeignKeyConstraint:
+            baseTableName: bookings
+            baseColumnNames: guest_id
+            referencedTableName: app_users
+            referencedColumnNames: id
+            constraintName: fk_bookings_guest
+            onDelete: RESTRICT
+
+        - createIndex:
+            tableName: bookings
+            indexName: idx_bookings_room_dates
+            columns:
+              - column:
+                  name: room_id
+              - column:
+                  name: check_in
+              - column:
+                  name: check_out
+
+        - createIndex:
+            tableName: bookings
+            indexName: idx_bookings_guest_created
+            columns:
+              - column:
+                  name: guest_id
+              - column:
+                  name: created_at

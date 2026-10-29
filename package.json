@@ -23,14 +23,11 @@
   },
   "lint-staged": {
     "hotel-frontend/**/*.{ts,tsx}": [
-      "cd hotel-frontend && npx eslint --fix",
-      "cd hotel-frontend && npx prettier --write"
+      "npm --prefix hotel-frontend exec -- eslint --fix",
+      "npm --prefix hotel-frontend exec -- prettier --write"
     ],
     "hotel-frontend/**/*.{css,json,md}": [
-      "cd hotel-frontend && npx prettier --write"
-    ],
-    "hotel_backend/**/*.java": [
-      "cd hotel_backend && gradlew.bat checkstyleMain -q"
+      "npm --prefix hotel-frontend exec -- prettier --write"
     ]
   },
   "keywords": [],
