@@ -36,7 +36,6 @@ public class BookingService {
     public BookingResponse createBooking(String guestEmail, CreateBookingRequest request) {
         validateDates(request.checkIn(), request.checkOut());
 
-        // Lock the room row so two simultaneous requests cannot both pass the overlap check.
         Room room = entityManager.find(Room.class, request.roomId(), LockModeType.PESSIMISTIC_WRITE);
         if (room == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Номер не найден");

@@ -17,17 +17,18 @@ export default defineConfig({
   },
 
   test: {
-    environment: 'jsdom',
+    environment: 'node',
     globals: true,
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
-      exclude: ['node_modules/', '**/*.d.ts', '**/*.config.*', 'src/main.tsx', 'src/vite-env.d.ts'],
+      include: ['src/utils/**/*.ts'],
+      exclude: ['node_modules/', '**/*.d.ts', '**/*.test.ts', '**/*.config.*'],
       thresholds: {
-        lines: 0,
-        branches: 0,
-        functions: 0,
-        statements: 0,
+        lines: 90,
+        branches: 70,
+        functions: 90,
+        statements: 90,
       },
     },
   },

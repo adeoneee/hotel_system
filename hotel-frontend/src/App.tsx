@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from 'react';
 import './App.css';
+import { apiRequest } from './utils/api';
+import { getNightCount } from './utils/date';
 
 type RoomType = 'STANDARD' | 'LUX';
 type RoomStatus = 'AVAILABLE' | 'OCCUPIED' | 'CLEANING' | 'MAINTENANCE';
@@ -67,12 +69,6 @@ interface AuthResponse {
   user?: AppUser;
 }
 
-interface ApiError {
-  message?: string;
-  detail?: string;
-  title?: string;
-}
-
 const TOKEN_KEY = 'hotel_access_token';
 
 const EMPTY_FORM: RoomForm = {
@@ -106,37 +102,6 @@ const moneyFormatter = new Intl.NumberFormat('ru-RU', {
   maximumFractionDigits: 2,
 });
 
-async function apiRequest<T>(path: string, options: RequestInit = {}, token?: string): Promise<T> {
-  const headers = new Headers(options.headers);
-
-  if (options.body !== undefined && options.body !== null) {
-    headers.set('Content-Type', 'application/json');
-  }
-
-  if (token) {
-    headers.set('Authorization', `Bearer ${token}`);
-  }
-
-  const response = await fetch(path, {
-    ...options,
-    headers,
-  });
-
-  if (!response.ok) {
-    const errorBody = (await response.json().catch(() => null)) as ApiError | null;
-    const detail = errorBody?.message ?? errorBody?.detail ?? errorBody?.title;
-    throw new Error(
-      detail ? `${detail} (HTTP ${response.status})` : `Ошибка сервера: HTTP ${response.status}`
-    );
-  }
-
-  if (response.status === 204) {
-    return undefined as T;
-  }
-
-  return (await response.json()) as T;
-}
-
 function getErrorMessage(error: unknown): string {
   return error instanceof Error ? error.message : 'Произошла неизвестная ошибка';
 }
@@ -153,18 +118,6 @@ function getDateInputValue(daysFromToday = 0): string {
   const day = String(date.getDate()).padStart(2, '0');
 
   return `${year}-${month}-${day}`;
-}
-
-function getNightCount(checkIn: string, checkOut: string): number {
-  if (!checkIn || !checkOut) {
-    return 0;
-  }
-
-  const start = new Date(`${checkIn}T00:00:00`);
-  const end = new Date(`${checkOut}T00:00:00`);
-  const nights = Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
-
-  return Number.isFinite(nights) && nights > 0 ? nights : 0;
 }
 
 function App() {
@@ -700,10 +653,7 @@ function App() {
             </button>
           </div>
         ) : (
-          <div className="environment">
-            <span className="environment-dot" />
-            Авторизация
-          </div>
+          <div className="environment">Авторизация</div>
         )}
       </header>
 
@@ -802,9 +752,7 @@ function App() {
                   maxLength={128}
                   required
                 />
-                {authMode === 'register' && (
-                  <small className="field-help">Регистрация создаёт аккаунт с ролью «Гость».</small>
-                )}
+                {authMode === 'register' && <small className="field-help"></small>}
               </div>
               <button
                 className="button button-primary submit-button"
@@ -814,14 +762,7 @@ function App() {
                 {authSubmitting ? 'Подождите…' : authMode === 'login' ? 'Войти' : 'Создать аккаунт'}
               </button>
             </form>
-            <p className="auth-footnote">
-              Администратор входит по учётным данным, заданным при первоначальной настройке сервера.
-            </p>
           </section>
-          <footer className="page-footer">
-            <span>HOTEL SYSTEM · ЛАБОРАТОРНАЯ РАБОТА №6</span>
-            <span>JWT · Spring Security</span>
-          </footer>
         </main>
       ) : authChecking ? (
         <main className="page loading-page">
@@ -1116,14 +1057,8 @@ function App() {
                     <p className="eyebrow">ЛИЧНЫЙ КАБИНЕТ</p>
                     <h2>Режим просмотра</h2>
                   </div>
-                  <span className="form-heading-icon" aria-hidden="true">
-                    ✓
-                  </span>
                 </div>
                 <div className="form-note">
-                  <span className="note-icon" aria-hidden="true">
-                    ↗
-                  </span>
                   <h4>Вы вошли как гость.</h4>
                 </div>
               </aside>
@@ -1137,9 +1072,6 @@ function App() {
                     <p className="eyebrow">НОВАЯ БРОНЬ</p>
                     <h2>Забронировать номер</h2>
                   </div>
-                  <span className="form-heading-icon" aria-hidden="true">
-                    +
-                  </span>
                 </div>
 
                 <form className="room-form booking-form" onSubmit={handleCreateBooking}>
@@ -1252,9 +1184,6 @@ function App() {
                 </form>
 
                 <div className="form-note">
-                  <span className="note-icon" aria-hidden="true">
-                    ↗
-                  </span>
                   <p>
                     Даты проверяются сервером при создании брони. Если выбранный период уже занят,
                     система не позволит оформить пересекающееся бронирование.
@@ -1396,9 +1325,6 @@ function App() {
               <div className="panel-footer"></div>
             </article>
           </section>
-          <footer className="page-footer">
-            <span>HOTEL SYSTEM</span>
-          </footer>
         </main>
       )}
     </div>

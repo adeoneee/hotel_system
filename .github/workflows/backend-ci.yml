@@ -44,6 +44,9 @@ jobs:
       - name: Run tests with coverage
         run: ./gradlew test jacocoTestReport
 
+      - name: Verify test coverage
+        run: ./gradlew jacocoTestCoverageVerification
+
       - name: Upload Checkstyle report
         if: always()
         uses: actions/upload-artifact@v4
