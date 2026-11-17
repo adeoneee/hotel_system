@@ -23,7 +23,14 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
       include: ['src/utils/**/*.ts'],
-      exclude: ['node_modules/', '**/*.d.ts', '**/*.test.ts', '**/*.config.*'],
+      exclude: [
+        'node_modules/',
+        '**/*.d.ts',
+        '**/*.test.ts',
+        '**/*.config.*',
+        'src/main.tsx',
+        'src/vite-env.d.ts',
+      ],
       thresholds: {
         lines: 90,
         branches: 70,
